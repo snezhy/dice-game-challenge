@@ -74,10 +74,6 @@ function setActivePlayer(playerOneActive) {
     }
 }
 
-function rnd() {
-  return Math.floor(Math.random() * 6) + 1
-}
-
 function resetGame() {
   currentScorePlayerOne.textContent = 0
   currentScorePlayerTwo.textContent = 0
