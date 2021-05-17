@@ -1,13 +1,13 @@
 const $form = $('form')
-const stop = document.querySelector(".btn-stop-rolling");
-const currentScorePlayerOne = document.querySelector("#current-score-player-one");
-const currentScorePlayerTwo = document.querySelector("#current-score-player-two");
-const scorePlayerOne = document.querySelector("#score-player-one");
-const scorePlayerTwo = document.querySelector("#score-player-two");
-const newGame = document.querySelector(".btn-new-game");
-const panelPlayerOne = document.querySelector(".player-one-panel");
-const panelPlayerTwo = document.querySelector(".player-two-panel");
-let counter = 0;
+const stop = document.querySelector(".btn-stop-rolling")
+const currentScorePlayerOne = document.querySelector("#current-score-player-one")
+const currentScorePlayerTwo = document.querySelector("#current-score-player-two")
+const scorePlayerOne = document.querySelector("#score-player-one")
+const scorePlayerTwo = document.querySelector("#score-player-two")
+const newGame = document.querySelector(".btn-new-game")
+const panelPlayerOne = document.querySelector(".player-one-panel")
+const panelPlayerTwo = document.querySelector(".player-two-panel")
+let counter = 0
 let totalScorePlayerOne = 0
 let totalScorePlayerTwo = 0
 
@@ -49,46 +49,46 @@ stop.addEventListener("click", () => {
             return
          }
   }
-  counter = 0;
+  counter = 0
   panelPlayerOne.classList.toggle("active")
   panelPlayerTwo.classList.toggle("active")
 })
 
 newGame.addEventListener("click", () => {
-  resetGame();
-});
+  resetGame()
+})
 
 function setActivePlayer(playerOneActive) {
     if (playerOneActive) {
         if (panelPlayerOne.classList.contains("active")) {
-            currentScorePlayerOne.textContent = counter;
+            currentScorePlayerOne.textContent = counter
         } else {
-            currentScorePlayerTwo.textContent = counter;
+            currentScorePlayerTwo.textContent = counter
         }
     } else {
-        counter = 0;
-        currentScorePlayerOne.textContent = 0;
-        currentScorePlayerTwo.textContent = 0;
-        panelPlayerOne.classList.toggle("active");
-        panelPlayerTwo.classList.toggle("active");
+        counter = 0
+        currentScorePlayerOne.textContent = 0
+        currentScorePlayerTwo.textContent = 0
+        panelPlayerOne.classList.toggle("active")
+        panelPlayerTwo.classList.toggle("active")
     }
 }
 
 function rnd() {
-  return Math.floor(Math.random() * 6) + 1;
+  return Math.floor(Math.random() * 6) + 1
 }
 
 function resetGame() {
-  currentScorePlayerOne.textContent = 0;
-  currentScorePlayerTwo.textContent = 0;
-  scorePlayerOne.textContent = 0;
-  scorePlayerTwo.textContent = 0;
-  totalScorePlayerOne = 0;
-  totalScorePlayerTwo = 0;
-  counter = 0;
+  currentScorePlayerOne.textContent = 0
+  currentScorePlayerTwo.textContent = 0
+  scorePlayerOne.textContent = 0
+  scorePlayerTwo.textContent = 0
+  totalScorePlayerOne = 0
+  totalScorePlayerTwo = 0
+  counter = 0
   if (!panelPlayerOne.classList.contains("active")) {
-    panelPlayerOne.classList.toggle("active");
-    panelPlayerTwo.classList.toggle("active");
+    panelPlayerOne.classList.toggle("active")
+    panelPlayerTwo.classList.toggle("active")
   }
 }
 
