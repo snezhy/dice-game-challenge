@@ -10,8 +10,6 @@ const panelPlayerTwo = document.querySelector(".player-two-panel")
 let counter = 0
 let totalScorePlayerOne = 0
 let totalScorePlayerTwo = 0
-
-console.log('$form ', $form)
 $form.on('submit', submitHandler)
 function submitHandler (e) {
     e.preventDefault()
@@ -20,12 +18,13 @@ function submitHandler (e) {
         url: '/game',
         type:'GET'
     }).done((response) => {
-        console.log(response)
-        diceOne.src =response.diceOne
+        diceOne.src = response.diceOne
         diceTwo.src = response.diceTwo
         const playerOneActive = response.playerOneActive
-        counter += response.playerOne.diceOneNum + response.playerOne.diceTwoNum
-        setActivePlayer(playerOneActive) 
+        const diceOneNum = response.playerOne.diceOneNum 
+        const diceTwoNum = response.playerOne.diceTwoNum 
+        counter += diceOneNum + diceTwoNum
+        setActivePlayer(playerOneActive, diceOneNum, diceTwoNum) 
     })
 }
 
@@ -58,7 +57,7 @@ newGame.addEventListener("click", () => {
   resetGame()
 })
 
-function setActivePlayer(playerOneActive) {
+const setActivePlayer = (playerOneActive, diceOneNum, diceTwoNum) => {
     if (playerOneActive) {
         if (panelPlayerOne.classList.contains("active")) {
             currentScorePlayerOne.textContent = counter
@@ -74,7 +73,21 @@ function setActivePlayer(playerOneActive) {
     }
 }
 
-function resetGame() {
+const sendActivePlayer = (playerId, active) => {
+
+    $.ajax ({
+        url: "player/",
+        type: 'GET',
+        data: {
+            player_id: playerId,
+            active: active
+        } 
+    }).done((response) => {
+       if (response) { console.log('success') }
+    })
+}
+
+const resetGame = () => {
   currentScorePlayerOne.textContent = 0
   currentScorePlayerTwo.textContent = 0
   scorePlayerOne.textContent = 0
@@ -88,6 +101,24 @@ function resetGame() {
   }
 }
 
+function callback(mutationsList) {
+  mutationsList.forEach(mutation => {
+      if (mutation.attributeName === 'class') {
+        if (panelPlayerOne.classList.contains("active")) {
+            sendActivePlayer(1, true)
+        } else {
+            sendActivePlayer(2, true)
+        }
+      }
+  })
+}
+
+const mutationObserver = new MutationObserver(callback)
+
+mutationObserver.observe(
+  document.querySelector('#panel-one'),
+  { attributes: true }
+)
 
 
 

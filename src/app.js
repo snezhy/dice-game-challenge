@@ -2,9 +2,8 @@ const path = require('path')
 const express = require('express')
 
 const Player = require('./player.js')
-const { Console } = require('console')
-const playerOne = new Player("Player 1")
-const playerTwo = new Player("Player 2")
+const playerOne = new Player("Player 1", true)
+const playerTwo = new Player("Player 2", false)
 
 console.log(playerOne.isPlayerActive())
 const app = express()
@@ -26,16 +25,27 @@ app.get('', (req, res) => {
 app.get('/game', (req, res) => {
     playerOne.diceOneNum = playerOne.rollDice() 
     playerOne.diceTwoNum = playerOne.rollDice() 
-    playerOne.calculateScore()
-    let playerOneActive = playerOne.isPlayerActive()
+    const playerOneActive = playerOne.isPlayerActive()
+    console.log(playerOneActive)
     res.send({
     title: "This is a Dice Game",
     playerOneActive: playerOneActive,
+    playerOneSnakeEyes: playerOne.isRollSnakeEyes(),
     diceOne: "/img/dice" + playerOne.diceOneNum + ".png",
     diceTwo: "/img/dice" + playerOne.diceTwoNum + ".png",
-    playerOne:  playerOne,
-    playerTwo: playerTwo
+    playerOne:  playerOne
     })
+})
+
+app.get('/player', (req, res) => {
+    const playerId = req.query.player_id
+    const active = req.query.active
+
+    if (playerId) {
+        if ((playerId === 1) && (active == true)) { playerOne.setActive(true) }
+        if ((playerId === 2) && (active == true)) { playerTwo.setActive(true) }
+    }
+
 })
 
 app.listen(3000, () => { 
