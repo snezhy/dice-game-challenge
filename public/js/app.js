@@ -20,11 +20,12 @@ function submitHandler (e) {
     }).done((response) => {
         diceOne.src = response.diceOne
         diceTwo.src = response.diceTwo
-        const playerOneActive = response.playerOneActive
+        const playerRolledOne = response.rolledOne
+        const snakeEyes = response.snakeEyes
         const diceOneNum = response.playerOne.diceOneNum 
         const diceTwoNum = response.playerOne.diceTwoNum 
         counter += diceOneNum + diceTwoNum
-        setActivePlayer(playerOneActive, diceOneNum, diceTwoNum) 
+        setActivePlayer(playerRolledOne, snakeEyes, diceOneNum, diceTwoNum) 
     })
 }
 
@@ -53,38 +54,38 @@ stop.addEventListener("click", () => {
   panelPlayerTwo.classList.toggle("active")
 })
 
+const resetTotalCountForPlayer = () => {
+
+}
+
 newGame.addEventListener("click", () => {
   resetGame()
 })
 
-const setActivePlayer = (playerOneActive, diceOneNum, diceTwoNum) => {
-    if (playerOneActive) {
+const setActivePlayer = (playerRolledOne, snakeEyes) => {
+    if (!playerRolledOne) {
         if (panelPlayerOne.classList.contains("active")) {
             currentScorePlayerOne.textContent = counter
         } else {
             currentScorePlayerTwo.textContent = counter
         }
     } else {
+      if (snakeEyes) {
+        if (panelPlayerOne.classList.contains("active")) {
+          alert("Sorry Player 1! You just rolled Snake Eyes, you lose all your points!")
+          scorePlayerOne.textContent = 0
+       } else {
+          alert("Sorry Player 2! You just rolled Snake Eyes, you lose all your points!")
+          scorePlayerTwo.textContent = 0
+       }
+        
+      }
         counter = 0
         currentScorePlayerOne.textContent = 0
         currentScorePlayerTwo.textContent = 0
         panelPlayerOne.classList.toggle("active")
         panelPlayerTwo.classList.toggle("active")
     }
-}
-
-const sendActivePlayer = (playerId, active) => {
-
-    $.ajax ({
-        url: "player/",
-        type: 'GET',
-        data: {
-            player_id: playerId,
-            active: active
-        } 
-    }).done((response) => {
-       if (response) { console.log('success') }
-    })
 }
 
 const resetGame = () => {
@@ -101,24 +102,6 @@ const resetGame = () => {
   }
 }
 
-function callback(mutationsList) {
-  mutationsList.forEach(mutation => {
-      if (mutation.attributeName === 'class') {
-        if (panelPlayerOne.classList.contains("active")) {
-            sendActivePlayer(1, true)
-        } else {
-            sendActivePlayer(2, true)
-        }
-      }
-  })
-}
-
-const mutationObserver = new MutationObserver(callback)
-
-mutationObserver.observe(
-  document.querySelector('#panel-one'),
-  { attributes: true }
-)
 
 
 

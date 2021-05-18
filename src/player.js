@@ -1,9 +1,9 @@
 module.exports = class Player {
-    constructer(name, active = false) {
+    constructer(name) {
         this.name = name
         this.diceOneNum = 0
         this.diceTwoNum = 0
-        this.active = active
+        this.active = false
     }
 
     getActive() {
@@ -19,10 +19,8 @@ module.exports = class Player {
         return dice
     }
 
-    isPlayerActive() {
-     
-        return ((this.diceOneNum || this.diceTwoNum) === 1) || 
-               ((this.diceOneNum && this.diceTwoNum) === 1) ? false : true
+    didPlayerRollOne() {
+        return ((this.diceOneNum || this.diceTwoNum) === 1) ? true : false
        
     }
 
