@@ -3,15 +3,6 @@ module.exports = class Player {
         this.name = name
         this.diceOneNum = 0
         this.diceTwoNum = 0
-        this.active = false
-    }
-
-    getActive() {
-        return this.active
-    }
-
-    setActive(active) {
-        this.active = active
     }
 
     rollDice() {

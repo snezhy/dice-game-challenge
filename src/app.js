@@ -2,8 +2,8 @@ const path = require('path')
 const express = require('express')
 
 const Player = require('./player.js')
-const playerOne = new Player("Player 1", true)
-const playerTwo = new Player("Player 2", false)
+const playerOne = new Player("Player 1")
+const playerTwo = new Player("Player 2")
 
 const app = express()
 
