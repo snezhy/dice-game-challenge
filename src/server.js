@@ -16,7 +16,6 @@ app.set('view engine', 'hbs')
 
 app.get('', (req, res) => {
     res.render('index', {
-    title: "This is a Dice Game",
     diceOne: "/img/dice"+playerOne.rollDice() + ".png",
     diceTwo: "/img/dice"+playerOne.rollDice() + ".png",
     })
@@ -26,9 +25,7 @@ app.get('/game', (req, res) => {
     playerOne.diceOneNum = playerOne.rollDice() 
     playerOne.diceTwoNum = playerOne.rollDice() 
     const playerOneActive = playerOne.isPlayerActive()
-    console.log(playerOneActive)
     res.send({
-    title: "This is a Dice Game",
     playerOneActive: playerOneActive,
     playerOneSnakeEyes: playerOne.isRollSnakeEyes(),
     diceOne: "/img/dice" + playerOne.diceOneNum + ".png",
